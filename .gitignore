@@ -1,0 +1,5 @@
+*.swp
+*.log*
+*.out
+src/desr
+doc/ucm_design/index.html

@@ -1,0 +1,159 @@
+<?xml version="1.0" ?>
+
+<!DOCTYPE article SYSTEM "/usr/share/sgml/docbook/dtd/xml/4.5/docbookx.dtd">
+
+
+<article status="draft" class="specification"> <title>Discrete Events Dynamics System Remote Runner serivce (DESR) solution. UC model and SW design.</title>
+
+    <articleinfo>
+	<author><personname><firstname>Yuri</firstname><surname>Borisov</surname></personname>
+	    <email>yuri.borisov.v@gmail.com</email></author> 
+
+	<releaseinfo>Ver.0.01 at 11-Oct-2023</releaseinfo>
+
+	<abstract>
+	    <simpara>This document collects use-cases and software desing items of DESR backend and frontend.</simpara>
+	</abstract>
+
+	<revhistory>
+	    <revision> <revnumber>0.01</revnumber> <date>11-Oct-2023</date> <authorinitials>Yuri Borisov</authorinitials>
+		<revremark>Initial version</revremark> </revision>
+	</revhistory>
+
+    </articleinfo>
+
+    <bibliolist>
+	<title>References</title>
+
+	<biblioentry id="ref_incr_mut"> <abbrev>INCR_MUT</abbrev>
+	    <productname><ulink url="../../../fap-doc/doc_incr_syst_creation/index.html "/></productname>
+	    <title>Y.Borisov. Using incremental mutation process for systems modeling</title> </biblioentry>
+    </bibliolist>
+
+    <glossary> <title>Glossary</title> 
+	<glossentry id="gls_deds"><glossterm>DEDS</glossterm> <acronym>DEDS</acronym>
+	    <glossdef> <para>
+		Discrete Event Dynamic System,  a discrete-state, event-driven system of which the state evolution depends entirely
+		on the occurrence of asynchronous discrete events over time. Although similar to continuous-variable dynamic systems (CVDS),
+			DEDS consists solely of discrete state spaces and event-driven state transition mechanisms.  Ref
+		    <ulink url="https://en.wikipedia.org/wiki/Discrete_event_dynamic_system"/></para>
+		<glossseealso otherterm="gls_des"/> </glossdef>
+	</glossentry>
+
+	<glossentry id="gls_des"><glossterm>DES</glossterm> <acronym>DES</acronym>
+	    <glossdef> <para>
+		Discrete-Event Simulation - model of the operation of a system as a discrete sequence of events in time.
+		Each event occurs at a particular instant in time and marks a change of state in the system. Ref
+		    <ulink url="https://en.wikipedia.org/wiki/Discrete-event_simulation"/></para> <glossseealso otherterm="gls_deds"/>
+		<para>Also this abbreviation is designates Discrete Event System, the implementation of discrete-event simulation.</para>
+	    </glossdef>
+	</glossentry>
+
+	<glossentry id="gls_desr"><glossterm>DESR</glossterm> <acronym>DESR</acronym>
+	    <glossdef> <para>
+		Discrete Events Dynamics System (<xref linkend="gls_des"/> Remote Runner serivce</para> </glossdef>
+	</glossentry>
+
+	<glossentry id="gls_fap2"><glossterm>FAP2</glossterm> <acronym>FAP2</acronym>
+	    <glossdef> <para>
+		Discrete Events System (DES) framework ver. 2 aka "grayb". Ref
+		    <ulink url="../../../grayb/doc/design/index.html"/> </para></glossdef>
+	</glossentry>
+    </glossary>
+
+    <sect1 id="ds_itr"><title>Intro</title>
+	<sect2 id="ds_itr_sp"><title>The scope of the project</title>
+	    <simpara>
+		This project is intended to study GO WEB solutionb and is binded to go_study project, ref
+		<ulink url="../../../../go_study/index.html"/>.
+		    Also it involves dynamic systems framework, ref
+		<ulink url="../../../fap3/doc/design/index.html"/>.
+	    </simpara>
+	    <simpara>
+		The main idea of DESR solution is to allow user to run DES model on remote server and observe the model.
+	    </simpara>
+	</sect2>
+	<sect2 id="ds_itr_dp"><title>Dependent projects</title>
+	    <sect3 id="ds_itr_dp_fap3"><title>DES framework fap3, ref <ulink url="../../../fap3/doc/design/index.html"/></title>
+	    </sect3>
+	    <sect3 id="ds_itr_dp_gos"><title>GO study, ref <ulink url="../../../../go_study/index.html"/></title>
+	    </sect3>
+	</sect2>
+	<sect2><title>Usefull refs</title>
+	    <itemizedlist>
+		<listitem> <ulink url="https://webref.ru/"/> - WebReference </listitem>
+		<listitem><ulink url="../../../../db_study/postgresql/index.html"/> - PosgreSQL db materials</listitem>
+	    </itemizedlist>
+	</sect2>
+    </sect1>
+
+    <sect1 id="ds_ulogin"><title>Design: DESR_UC_02 USER logs in DESR</title>
+	<sect2><title>Intro</title>
+	    <simpara>Ref <xref linkend="uc_02"/> for main use-case.</simpara>
+	    <simpara>Ref <ulink url="../../../../db_study/postgresql/index.html"/> for PosgreSQL db materials</simpara>
+	</sect2>
+	<sect2><title>Steps</title>
+	    <sect3><title>Create database from spec</title>
+		<simpara>
+		    Ref
+		    <ulink url="../../../../db_study/postgresql/index.html#ref_ht_cdfs"/>:
+		    <programlisting>
+			psql -U yborisov -f setup.sql -d desr
+		    </programlisting>
+		</simpara>
+		<simpara>
+		    Let's use
+		    <ulink url="/home/yborisov/projects_work/go_study/gwp/Chapter_2_Go_ChitChat/chitchat/data/setup.sql"/>
+			as an example
+		</simpara>
+	    </sect3>
+	</sect2>
+    </sect1>
+
+    <sect1><title>UCs tracing: implemented</title>
+	<sect2><title><xref linkend="uc_01"/></title>
+	</sect2>
+    </sect1>
+
+
+    <sect1 id="uc"> <title>Use cases</title>
+	<sect2 id="uc_01"><title>DESR_UC_01 USER runs DES spec</title>
+	    <sect3><title>Actors</title>
+		<itemizedlist>
+		    <listitem>DESR: DES remote runner</listitem>
+		</itemizedlist>
+	    </sect3>
+	    <sect3><title>Normal</title>
+		<itemizedlist>
+		    <listitem>USER opens DESR view in browser - view allows USER to enter DES spec - USER enters DES spec -
+		view shows the button to run the spec - USER taps the button - DESR runs the spec and shows run output to USER.</listitem>
+		</itemizedlist>
+	    </sect3>
+	    <sect3><title>Extends</title> 
+	    </sect3>
+	    <sect3><title>Extended by</title> <itemizedlist> </itemizedlist> </sect3>
+	    <sect3><title>Discussion</title> </sect3>
+	</sect2>
+	<sect2 id="uc_02"><title>DESR_UC_02 USER logs in DESR</title>
+	    <sect3><title>Actors</title>
+		<itemizedlist>
+		    <listitem>DESR: DES remote runner</listitem>
+		</itemizedlist>
+	    </sect3>
+	    <sect3><title>Normal</title>
+		<itemizedlist>
+		    <listitem>USER opens DESR view in browser - view allows USER to log in - USER enters name and password -
+			view shows the button to submit log in data - USER taps the button - DESR verifies the data and registers USER as
+			DESR verified user.</listitem>
+		</itemizedlist>
+	    </sect3>
+	    <sect3><title>Extends</title> 
+	    </sect3>
+	    <sect3><title>Extended by</title> <itemizedlist> </itemizedlist> </sect3>
+	    <sect3><title>Discussion</title> </sect3>
+	</sect2>
+</sect1>
+
+
+
+</article>
